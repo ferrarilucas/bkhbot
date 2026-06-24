@@ -15,22 +15,22 @@ const NICKNAME_MAX_LENGTH = 32;
 
 interface Registration {
   nome: string;
-  vulgo: string;
+  vulgo: string | null;
   passaport: string;
 }
 
 function parseRegistration(content: string): Registration | null {
   const nome = content.match(/^Nome:\s*(.+)$/im)?.[1]?.trim();
-  const vulgo = content.match(/^Vulgo:\s*(.+)$/im)?.[1]?.trim();
+  const vulgo = content.match(/^Vulgo:\s*(.*)$/im)?.[1]?.trim() || null;
   const passaport = content.match(/^Passaport:\s*(.+)$/im)?.[1]?.trim();
 
-  if (!nome || !vulgo || !passaport) return null;
+  if (!nome || !passaport) return null;
 
   return { nome, vulgo, passaport };
 }
 
 function buildNickname({ nome, vulgo, passaport }: Registration): string {
-  const full = `${nome} (${vulgo}) | ${passaport}`;
+  const full = vulgo ? `${nome} (${vulgo}) | ${passaport}` : `${nome} | ${passaport}`;
   if (full.length <= NICKNAME_MAX_LENGTH) return full;
   return `${nome} | ${passaport}`;
 }
