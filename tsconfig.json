@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "commonjs",
-    "lib": ["ES2022"],
+    "module": "CommonJS",
+    "rootDir": "./src",              // <--- Adicione ou ajuste esta linha
+    "outDir": "./dist",              // <--- Adicione ou ajuste esta linha
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "dist"
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": ["src/**/*"]            // <--- Garanta que isso também está aqui
 }
