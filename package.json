@@ -10,7 +10,8 @@
   "author": "Lucas Ferrari <ferrari.lucasr@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.26.4"
+    "discord.js": "^14.26.4",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
