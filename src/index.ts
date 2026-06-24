@@ -35,7 +35,7 @@ function buildNickname({ nome, vulgo, passaport }: Registration): string {
   return `${nome} | ${passaport}`;
 }
 
-async function fireWebhook(url: string, body: object): Promise<void> {
+async function fireWebhook(url: string, body: object): Promise<boolean> {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -44,7 +44,10 @@ async function fireWebhook(url: string, body: object): Promise<void> {
 
   if (!res.ok) {
     console.error(`Webhook responded with ${res.status}: ${await res.text()}`);
+    return false;
   }
+
+  return true;
 }
 
 
@@ -89,7 +92,7 @@ client.on('messageCreate', async (message: Message) => {
   }
 
   try {
-    await fireWebhook(N8N_WEBHOOK_URL!, {
+    const ok = await fireWebhook(N8N_WEBHOOK_URL!, {
       author: message.author.username,
       authorId: message.author.id,
       channelId: message.channel.id,
@@ -99,6 +102,8 @@ client.on('messageCreate', async (message: Message) => {
       passaport: registration.passaport,
       nickname,
     });
+
+    if (ok) await message.react('✅');
   } catch (err) {
     console.error('Failed to fire registration webhook:', (err as Error).message);
   }
