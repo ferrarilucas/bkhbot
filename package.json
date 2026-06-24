@@ -2,7 +2,9 @@
   "name": "bkhbot",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:dev": "tsx src/index.ts --watch",
     "typecheck": "tsc --noEmit"
   },
   "author": "Lucas Ferrari <ferrari.lucasr@gmail.com>",
